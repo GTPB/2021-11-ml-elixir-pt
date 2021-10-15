@@ -1,0 +1,21 @@
+{
+    "description": "<p>Machine learning has emerged as a discipline that enables computers to assist humans in making sense of large and complex data sets. With the drop-in cost of sequencing technologies, large amounts of omics data are being generated and made accessible to researchers. Analysing these complex high-volume data is not trivial and the use of classical tools cannot explore their full potential. Machine learning can thus be very useful in mining large omics datasets to uncover new insights that can advance the field of medicine and improve health care.</p>\n<p>The aim of this tutorial is to introduce participants to the Machine learning (ML) taxonomy and common machine learning algorithms. The tutorial will cover the methods being used to analyse different omics data sets by providing a practical context through the use of basic but widely used R and Python libraries. The tutorial will comprise a number of hands on exercises and challenges, where the participants will acquire a first understanding of the standard ML processes as well as the practical skills in applying them on familiar problems and publicly available real-world data sets.</p>",
+    "license": "CC-BY-4.0",
+    "title": "Introduction to Machine Learning",
+    "version": "v1.0.0",
+    "upload_type": "software",
+    "publication_date": "2021-06-18",
+    "creators": [
+        {
+            "affiliation": "SIB Swiss Institute of Bioinformatics - Vital-IT Group, CH",
+            "name": "Thuong Van Du Tran",
+            "orcid": "0000-0003-2074-5029"
+        },
+        {
+            "affiliation": "Institute of Applied Biosciences - CERTH, GR",
+            "name": "Fotis E. Psomopoulos",
+            "orcid": "0000-0002-0222-4273"
+        }
+    ],
+    "access_right": "open"
+}
