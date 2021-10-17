@@ -6,11 +6,11 @@
   <a href="https://www.elixir-europe.org/" title="ELIXIR">
     <img style="margin-right:50px" alt="ELIXIR" src="static/images/ELIXIR-logo.png" width="100"/>
   </a>  
-  <a href="www.igc.gulbenkian.pt/" title="ELIXIR">
+  <a href="https://biodata.pt/" title="ELIXIR">
     <img style="margin-right:50px" alt="ELIXIR" src="static/images/Biodata_ELIXIR.png" width="100"/>
   </a>
-  <a href="https://www.elixir-europe.org/" title="ELIXIR">
-    <img style="margin-right:50px" alt="ELIXIR" src="static/images/IGC_PRETO.png" width="100"/>
+  <a href="https://www.igc.gulbenkian.pt/" title="ELIXIR">
+    <img style="margin-right:50px" alt="ELIXIR" src="static/images/IGC_Black.png" width="100"/>
   </a>
 </div>  
 
