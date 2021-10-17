@@ -132,7 +132,7 @@ Relevant literature includes:
 
 ## Additional information
 
-**Coordination**: Pedro L. Fernandes, Training Coordinator of [ELIXIR-PT](https://biodata.pt/),[Instituto Gulbenkian de Ciência](https://igc.gulbenkian.pt/)
+**Coordination**: Pedro L. Fernandes, Training Coordinator of [ELIXIR-PT](https://biodata.pt/), [Instituto Gulbenkian de Ciência](https://igc.gulbenkian.pt/)
 
 ELIXIR-PT abides by the [ELIXIR Code of Conduct](https://elixir-europe.org/events/code-of-conduct). Participants in this course are also required to abide by the same code.
 
