@@ -1,10 +1,10 @@
 
 <div class="sponsor-logos">
   <a href="http://inab.certh.gr/" title="INAB/CERTH">
-    <img style="margin-right:50px" alt="INAB/CERTH" src="static/images/INAB-logo.png" width="100"/>
+    <img style="margin-right:50px" alt="INAB/CERTH" src="static/images/INAB-logo.png" width="70"/>
   </a>
   <a href="https://www.elixir-europe.org/" title="ELIXIR">
-    <img style="margin-right:50px" alt="ELIXIR" src="static/images/ELIXIR-logo.png" width="100"/>
+    <img style="margin-right:50px" alt="ELIXIR" src="static/images/ELIXIR-logo.png" width="50"/>
   </a>  
   <a href="https://biodata.pt/" title="ELIXIR">
     <img style="margin-right:50px" alt="ELIXIR" src="static/images/Biodata_ELIXIR.png" width="200"/>
