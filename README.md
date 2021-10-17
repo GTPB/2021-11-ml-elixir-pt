@@ -18,9 +18,9 @@
 
 **When**: 11-18 November 2021, 09:00 - 12:00 UTC
 
-**Where**: F2F
+**Where**: Instituto Gulbenkian de Ciencia, Oeiras, PT
 
-**Registration**: CLOSED
+**Registration**: About to Open
 
 
 ### Instructors and helpers
