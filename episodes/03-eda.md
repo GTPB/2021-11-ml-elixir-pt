@@ -104,7 +104,7 @@ library(GGally)
 ggpairs(breastCancerDataNoID[1:5], aes(color=Diagnosis, alpha=0.4))
 ```
 
-![ggpairs output of the first 5 variables](https://raw.githubusercontent.com/https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/ggpairs5variables.png "ggpairs output of the first 5 variables")
+![ggpairs output of the first 5 variables](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/ggpairs5variables.png "ggpairs output of the first 5 variables")
 
 This view is very nice as it allows us to see many details about our different columns : 
  - how the datapoints are spread out (is the scale of the different variables the same?)
@@ -231,7 +231,7 @@ plot( nr_missing , avg)
 abline(lm( avg ~ nr_missing),col='red')
 dev.off()
 ```
-![plot of average and number of NAs](https://raw.githubusercontent.com/https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/phospho_nr_missing_avg.png "relationship between average intensity and number of missing values")
+![plot of average and number of NAs](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/phospho_nr_missing_avg.png "relationship between average intensity and number of missing values")
 
 Here, the missing values are not randomly distributed but more likely for low intensity peptides: the average peptide intensity decreases with increasing number of missing values per peptide. 
 This is actually a known phenomenon for this kind of data.
@@ -260,7 +260,7 @@ In any case:
 
 Let's get back to the cancer dataset.
 
-![ggpairs output of the first 5 variables](https://raw.githubusercontent.com/https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/ggpairs5variables.png "ggpairs output of the first 5 variables")
+![ggpairs output of the first 5 variables](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/ggpairs5variables.png "ggpairs output of the first 5 variables")
 
 Note that the features have widely varying centers and scales (means and standard deviations), so we'll want to center and scale them in some situations. 
 Specifically **all methods that rely on any concept of *distance* among points** can be affected: PCA, linear regression, KNN, K-Means, hirarchical clustering, ... (ie. most of what we will see during this course).
@@ -326,7 +326,7 @@ library(GGally)
 ggpairs(breastCancerDataNoID_tr[1:5], aes(color=Diagnosis, alpha=0.4))
 ```
 
-![ggpairs output of the first 5 variables of the recentered/rescaled data](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/ggpairs5variables_tr.png "ggpairs output of the first 5 variables of the recentered/rescaled data")
+![ggpairs output of the first 5 variables of the recentered/rescaled data](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/ggpairs5variables_tr.png "ggpairs output of the first 5 variables of the recentered/rescaled data")
 
 _Question: **Do you see any differences?**_
 
