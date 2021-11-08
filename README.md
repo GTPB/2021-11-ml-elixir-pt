@@ -16,7 +16,7 @@
 
 ## Overview of the course material for the ELIXIR-PT "Introduction to Machine Learning Using R" course
 
-**When**: 11-18 November 2021, 09:00 - 12:00 UTC
+**When**: 15-17 November 2021, 09:30 - 18:30 UTC
 
 **Where**: Instituto Gulbenkian de Ciencia, Oeiras, PT
 
@@ -27,17 +27,14 @@
 
 **Instructors**:
 
-- Wandrille Duchemin (ELXIIR-CH, Basel University>
+- Wandrille Duchemin (ELIXIR-CH, Basel University, SIB Swiss Institute of Bioinformatics)
 - Crhistian Cardona (ELIXIR-UK, University of Tuebingen)
 
-**Helpers**:
-
-- to be updated
 
 ### Overview
 With the rise in high-throughput sequencing technologies, the volume of omics data has grown exponentially in recent times and a major issue is to mine useful knowledge from these data which are also heterogeneous in nature. Machine learning (ML) is a discipline in which computers perform automated learning without being programmed explicitly and assist humans to make sense of large and complex data sets. The analysis of complex high-volume data is not trivial and classical tools cannot be used to explore their full potential. Machine learning can thus be very useful in mining large omics datasets to uncover new insights that can advance the field of bioinformatics.
 
-This 4-half-day course will introduce participants to the machine learning taxonomy and the applications of common machine learning algorithms to omics data. The course will cover the common methods being used to analyse different omics data sets by providing a practical context through the use of basic but widely used R libraries. The course will comprise a number of hands-on exercises and challenges where the participants will acquire a first understanding of the standard ML processes, as well as the practical skills in applying them on familiar problems and publicly available real-world data sets.
+This 3-days course will introduce participants to the machine learning taxonomy and the applications of common machine learning algorithms to omics data. The course will cover the common methods being used to analyse different omics data sets by providing a practical context through the use of basic but widely used R libraries. The course will comprise a number of hands-on exercises and challenges where the participants will acquire a first understanding of the standard ML processes, as well as the practical skills in applying them on familiar problems and publicly available real-world data sets.
 
 ### Learning objectives
 
@@ -62,44 +59,59 @@ Familiarity with any programming language will be required (familiarity with R w
 #### Technical
 This course will be streamed, you are thus required to have your own computer with an internet connection. In order to ensure clear communication between Instructors and participants, we will be using collaborative tools, such as [Google Drive](https://www.google.com/drive/) and/or Google Docs.
 
-_Maximum participants_: 30
+_Maximum participants_: 20
 
 ### Schedule
+
+*Note: this schedule is fairly tentative and will adapt to the trainees needs and questions, with the expection of* _**start, stop, break and lunch time which will be scrupulously respected.**_
 
 **Day 1**
 
 | Time  |  Details |
 |--------|----------|
-| 09:00 - 09:30 | **Course Introduction**. <br /> <br /> - Welcome. <br /> - Introduction and CoC. <br /> - Way to interact <br /> - Practicalities (agenda, breaks, etc). <br />- Setup <br /> [_Link to material_](episodes/setup.md) |
-| 09:30 - 10:00 | **Introduction to Machine Learning** (_theory_) |
-| 10:00 - 11:30 | **What is Exploratory Data Analysis (EDA) and why is it useful?** (_hands-on_) <br /><br /> - Loading omics data <br /> - PCA <br /> [_Link to material_](episodes/03-eda-unsupervised-learning.md) |
-| 11:30 - 11:45 | _Coffee Break_ |
-| 11:45 - 12:15 | **Introduction to Unsupervised Learning** (_theory_) |
-| 12:15 - 13:00 | **Agglomerative Clustering: k-means** (_practical_) [_Link to material_](episodes/03-eda-unsupervised-learning.md) |
-| 13:00 - 14:00 | _Lunch break_ |
-| 14:00 - 14:45 | **Agglomerative Clustering: k-means** (_practical_) (cont'd) |
-| 14:45 - 15:30 | **Divisive Clustering: hierarchical clustering** (_practical_) [_Link to material_](episodes/03-eda-unsupervised-learning.md) |
-| 15:30 - 15:45 | _Coffee Break_ |
-| 15:45 - 16:30 | **Divisive Clustering: hierarchical clustering** (_practical_) (cont'd) |
-| 16:30         | _Closing of Day 1_ |
+| 09:30 - 10:00 | **Course Introduction**. <br /> <br /> - Welcome. <br /> - Introduction and CoC. <br /> - Way to interact <br /> - Practicalities (agenda, breaks, etc). <br />- Setup <br /> [_Link to material_](episodes/setup.md) |
+| 10:00 - 10:30 | **Introduction to Machine Learning** (_theory_) |
+| 10:30 - 11:00 | **What is Exploratory Data Analysis (EDA) and why is it useful?** (_hands-on_) <br /><br /> - Loading omics data <br /> - PCA <br /> [_Link to material_](episodes/03-eda.md) |
+| 11:00 - 11:30 | _Coffee Break_ |
+| 11:30 - 12:30 | **Exploratory Data Analysis - continued** (_hands-on_) |
+| 12:30 - 14:00 | _Lunch break_ |
+| 14:00 - 14:30 | **Introduction to Unsupervised Learning** (_theory_) |
+| 14:30 - 15:00 | **Agglomerative Clustering: k-means** (_practical_) [_Link to material_](episodes/04-unsupervised-learning.md) |
+| 15:00 - 15:30 | _Coffee Break_ |
+| 15:30 - 18:30 | **Agglomerative Clustering: k-means - continued** (_practical_) |
+| 18:30         | _Closing of Day 1_ |
 
 
 **Day 2**
 
 | Time  |  Details |
 |--------|----------|
-| 09:00 - 09:30 | **Welcome Day 2**. <br /> <br /> - Questions from Day 1 <br /> - Agenda <br /> |
-| 09:30 - 10:00 | **Introduction to Supervised Learning** (_theory_) <br /> <br /> - Overview of multiple algorithms <br /> - Advantages and Disadvantages <br /> |
-| 10:00 - 10:30 | **Classification Metrics** (_theory_) <br /> <br /> - F1 Score, Precision, Recall <br /> - Confusion Matrix, ROC-AUC <br /> |
-| 10:30 - 11:30 | **Classification** (_practical_) <br /> <br /> - Decision trees <br /> - Random Forests <br /> [_Link to material_](episodes/04-supervised-learning.md) |
-| 11:30 - 11:45 | _Coffee Break_ |
-| 11:45 - 12:30 | **Classification** (_practical_) (cont'd)
-| 12:30 - 13:30 | _Lunch break_ |
-| 13:30 - 14:00 | **Regression** (_theory_) |
-| 14:00 - 15:15 | **Regression** (_practical_) <br /> <br /> - Linear regression <br /> - Generalized Linear Model (GLM) <br />  [_Link to material_](episodes/04-supervised-learning.md) |
-| 15:15 - 15:30 | _Coffee Break_ |
-| 15:30 - 16:00 | **Regression** (_practical_) (cont'd) |
-| 16:00 - 16:30 | _Closing questions, Discussion_ |
+| 09:30 - 10:00 | **Welcome Day 2**. <br /> <br /> - Questions from Day 1 <br /> - Recap <br /> |
+| 10:00 - 10:30 | **Divisive Clustering: hierarchical clustering** (_theory_) |
+| 10:30 - 11:00 | **Divisive Clustering: hierarchical clustering** (_practical_) [_Link to material_](episodes/04-unsupervised-learning.md) |
+| 11:00 - 11:30 | _Coffee Break_ |
+| 11:00 - 12:30 | **Divisive Clustering: hierarchical clustering - continued** (_practical_) |
+| 12:30 - 14:00 | _Lunch break_ |
+| 14:00 - 15:00 | **Classification - didactical introduction** (_practical_) <br /> <br /> - Decision trees <br /> <br /> - the classification pipeline <br /> [_Link to material_](episodes/05-supervised-learning-classification.md) |
+| 15:00 - 15:30 | _Coffee Break_ |
+| 15:30 - 17:30 | **Classification - metrics and evaluation** (_practical_) <br /> <br /> - F1 Score, Precision, Recall <br /> - Confusion Matrix, ROC-AUC <br /> [_Link to material_](episodes/05-supervised-learning-classification.md) |
+| 17:30 - 18:30 | **Classification - random forests** (_practical_) <br />  [_Link to material_](episodes/05-supervised-learning-classification.md) |
+
+**Day 3**
+
+| Time  |  Details |
+|--------|----------|
+| 09:30 - 10:00 | **Welcome Day 3**. <br /> <br /> - Questions from Day 2 <br /> - Recap <br /> |
+| 10:00 - 11:00 | **Classification - more algorithms** (_theory_) <br /> <br /> - Naive Bayes <br /> - SVMs <br />  |
+| 11:00 - 11:30 | _Coffee Break_ |
+| 11:30 - 12:00 | **Regression** (_theory_) |
+| 12:00 - 12:30 | **Linear regression** (_practical_) <br /> [_Link to material_](episodes/06-supervised-learning-regression.md) |
+| 12:30 - 14:00 | _Lunch break_ |
+| 14:00 - 15:00 | **Linear regression - continued** (_practical_) |
+| 15:00 - 15:30 | _Coffee Break_ |
+| 15:30 - 17:00 | **Generalized Linear Model (GLM)** (_practical_)  <br />  [_Link to material_](episodes/06-supervised-learning-regression.md) |
+| 17:00 - 17:30 | **Recap and overture to advanced topics** (_theory_)|
+| 17:30 - 18:30 | _Closing questions, Discussion_ |
 
 ## Other examples
 
