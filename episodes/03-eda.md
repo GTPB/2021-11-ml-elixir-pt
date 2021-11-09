@@ -375,10 +375,10 @@ melted_cormat = melt( reorder_cormat( round(cor( breastCancerDataNoID[2:ncol(bre
 g = ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
   geom_tile() + 
   geom_text(aes(Var2, Var1, label = value), color = "black", size = 2) +
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1,1), space = "Lab", name="Pearson\nCorrelation") +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1,1), space = "Lab",
+  name="Pearson\nCorrelation") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 12, hjust = 1))
 g
-ggsave("../static/images/cancerCorr.png", width = 20, height = 20 , units = 'cm' )
 ```
 
 ![correlation of the cancer variables](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/cancerCorr.png "correlation of the cancer variables")
@@ -461,9 +461,15 @@ barplot( colMeans( breastCancerData[3:ncol(breastCancerData)] ) ,
 
 
 
-_Extra Question:_ **If you have an idea what went wrong, try to do the right thing. Put the resulting pca object in `ppv_pca` **
+*Extra Question:* **If you have an idea what went wrong, try to do the right thing. Put the resulting pca object in `ppv_pca` **
 
 <br>
+
+<br>
+
+---
+
+Don't peek.
 
 <br>
 
