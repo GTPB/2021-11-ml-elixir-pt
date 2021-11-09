@@ -94,7 +94,7 @@ _Maximum participants_: 20
 | 12:30 - 14:00 | _Lunch break_ |
 | 14:00 - 15:00 | **Classification - didactical introduction** (_practical_) <br /> <br /> - Decision trees <br /> <br /> - the classification pipeline <br /> [_Link to material_](episodes/05-supervised-learning-classification.md) |
 | 15:00 - 15:30 | _Coffee Break_ |
-| 15:30 - 17:30 | **Classification - metrics and evaluation** (_practical_) <br /> <br /> - F1 Score, Precision, Recall <br /> - Confusion Matrix, ROC-AUC <br /> [_Link to material_](episodes/05-supervised-learning-classification.md) |
+| 15:30 - 17:30 | **Classification - metrics and evaluation** (_theory_/_practical_) <br /> <br /> - F1 Score, Precision, Recall <br /> - Confusion Matrix, ROC-AUC <br /> [_Link to material_](episodes/05-supervised-learning-classification.md) |
 | 17:30 - 18:30 | **Classification - random forests** (_practical_) <br />  [_Link to material_](episodes/05-supervised-learning-classification.md) |
 
 **Day 3**
