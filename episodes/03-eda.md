@@ -4,7 +4,17 @@
 
 # Table of Content <a id="toc"></a>
 
-## Loading some data
+ 1. [Loading some data](#load)
+ 2. [A first look at the data](#look)
+ 3. [Another (messier) dataset](#phospho)
+ 4. [Value transformation and variance stabilization](#transfo)
+ 5. [Handling missing values](#NA)
+ 6. [Normalizing your data](#normalize)
+ 7. [PCA](#PCA)
+
+[back to ToC](#toc)
+
+## 1. Loading some data <a id="load"></a>
 
 The data that we will be using for this workshop are from the following sources:
 
@@ -62,7 +72,7 @@ breastCancerData$Diagnosis <- as.factor(breastCancerData$Diagnosis)
 
 [back to ToC](#toc)
 
-## A first look at the data
+## 2. A first look at the data <a id="look"></a>
 
 Before thinking about modeling, have a look at your data. There is no point in throwing a 10000 layer convolutional neural network at your data before you even know what you're dealing with.
 
@@ -125,7 +135,9 @@ Here, the cancer dataset is very tidy, has no missing data, no outliers, ...
 
 But unless you are extra lucky you are likely to encounter some messy data sooner or later, so let's quickly load up another dataset to have a look at things when they are not so rosy.
 
-## Another (messier) dataset
+[back to ToC](#toc)
+
+## 3. Another (messier) dataset <a id="phospho"></a>
 
 This is a yeast Phospho proteomics dataset [Plank et al. MCP, 2020](https://doi.org/10.1074/mcp.RA120.001955). 
 The study performed a LC-MS/MS experiment and label-free quantitation to study the effect of AGC-kinases (Sch9, Pka1, Ypk1) inhibition on the phosphoproteome. 
@@ -160,9 +172,9 @@ You can see that the first 3 columns are metadata, and that there are some `NA`s
 
 _Question:_ **Try to plot the first few numerical columns (`df_phospho[4:10]`) like before. What are your impression**
 
+[back to ToC](#toc)
 
-
-## Value transformation and variance stabilization
+## 4. Value transformation and variance stabilization <a id="transfo"></a>
 
 This plot shows an important characteristics of the data: **the scatter of the points increases with increasing MS1 intensity values**, which is a common feature in quantitative proteomics (and other omics) data. 
 
@@ -179,8 +191,9 @@ Well, this already looks much better, doesn't it ?
 **Important note**: log-transform, like any kind of **transformation, is not a mandatory step** and should only be done if you have a good reason to do so (eg. heteroskedasticity, huge dynamic range, ...).
 As often, a **good knowledge about the nature of your data** (is it count values ? fractions ? RNAseq ? ...) will help you.
 
+[back to ToC](#toc)
 
-## Handling missing values
+## 5. Handling missing values <a id="NA"></a>
 
 Missing values (typically, `NA`s) are an important thing to look for in your data because they can interfere with many (if not most) of the methods we may want to apply to our data.
 
@@ -202,7 +215,7 @@ Often **the key is a good knowledge about the nature of your data**.
 
 We will review here some of the most common, but this is far from an exhaustive review
 
-### case 1 : throw them out
+### 5.1. case 1 : throw them out
 
 If you have enough data, you could just throw out any observation (ie. row) containing `NA`.
 
@@ -215,7 +228,7 @@ print(paste('dropping NAs:',nrow(df_phospho_log),'->',nrow(df_phospho_log_noNA))
 dropping NAs: 2959 -> 1699
 ```
 
-### case 2 : imput with a *fixed* value
+### 5.2. case 2 : imput with a *fixed* value
 
 Under certain circumstances, you may hasard an educated guess as to what a *reasonable value* could be for your `NA`s.
 
@@ -245,7 +258,7 @@ A possible strategy here would be to **impute all zero values with half the mini
 If they were missing at random, then you could for instance replace these values with the median value of the column (this can be a good idea for categorical columns).
 
 
-### case 3 : "advanced" imputation
+### 5.3. case 3 : "advanced" imputation
 
 Without going too far down the rabbit hole, know that there exists a flurry of methods to perform imputation which actually rely on Machine Learning methods
 (for instance, using the [K-Nearest Neighbors algorithm](https://machinelearningmastery.com/knn-imputation-for-missing-values-in-machine-learning/), or [DeepLearning](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1837-6)).
@@ -258,9 +271,9 @@ In any case:
  - test and evaluate how different handling methods influence your results
  - **knowledge of your data is key**
 
+[back to ToC](#toc)
 
-
-## Normalizing your data
+## 6. Normalizing your data <a id="normalize"></a>
 
 Let's get back to the cancer dataset.
 
@@ -334,31 +347,141 @@ ggpairs(breastCancerDataNoID_tr[1:5], aes(color=Diagnosis, alpha=0.4))
 
 _Question: **Do you see any differences?**_
 
+[back to ToC](#toc)
+
+## 7. Dimensionality Reduction - PCA  <a id="PCA"></a>
+
+Dimensionality reduction serves two puposes
+ - **Visualization**: reducing the number of dimensions to 2 or 3 allows displaying the whole dataset for visual inspection
+ - **Data compression**: some features may be little informative and projecting feature vectors to the principal data manifold allows discarding the uninformative part of the feature space
 
 
-### Dimensionality Reduction and PCA
+In the UCI dataset, for example, there are too many features to keep track of. What if we could reduce the number of features yet still keep much of the information?
+
+Already intuitively, we have seen that there was some variables that are highly correlated. 
+
+```r
+library( reshape2 )
+
+reorder_cormat <- function(cormat){
+
+dd <- as.dist((1-cormat)/2)
+hc <- hclust(dd)
+cormat <-cormat[hc$order, hc$order]
+}
+
+melted_cormat = melt( reorder_cormat( round(cor( breastCancerDataNoID[2:ncol(breastCancerDataNoID)] ),2 ) ) )
+
+g = ggplot(data = melted_cormat, aes(x=Var1, y=Var2, fill=value)) + 
+  geom_tile() + 
+  geom_text(aes(Var2, Var1, label = value), color = "black", size = 2) +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0, limit = c(-1,1), space = "Lab", name="Pearson\nCorrelation") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 12, hjust = 1))
+g
+ggsave("../static/images/cancerCorr.png", width = 20, height = 20 , units = 'cm' )
+```
+
+![correlation of the cancer variables](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/cancerCorr.png "correlation of the cancer variables")
+
+It would be tempting to remove all but 1 variable in the groups where the correlations are very high, or to combine them together.
 
 
-Another form of unsupervised learning, is dimensionality reduction; in the UCI dataset, for example, there are too many features to keep track of. What if we could reduce the number of features yet still keep much of the information?
+**Principal component analysis** (PCA) is one of the most commonly used methods of dimensionality reduction, and **finds the direction(s) in feature space with the largest variance (first principal component(s))**, meaning the direction(s) where the data points are most spread out. 
 
-Principal component analysis (PCA) is one of the most commonly used methods of dimensionality reduction, and extracts the features with the largest variance. What PCA essentially does is the following:
+What PCA essentially does is the following:
 - The first step of PCA is to decorrelate your data and this corresponds to a linear transformation of the vector space your data lie in;
 - The second step is the actual dimension reduction; what is really happening is that your decorrelation step (the first step above) transforms the features into new and uncorrelated features; this second step then chooses the features that contain most of the information about the data.
 
+Mathematically this boils down to the eigenvalue decomposition or diagonalization of the covariance matrix, where the eigenvalue is the variance of the data along its eigenvector (principal component).
+
+The output of such a process is a set of eigenvectors or PCs (which are a linear combination of your former features) and the variance corresponding to each eigenvector (eigenvalues).
+
+Principal Components are the underlying structure in the data. They are the directions where there is the most variance, the directions where the data is most spread out. This means that we try to find the straight line that best spreads the data out when it is projected along it. This is the first principal component, the straight line that shows the most substantial variance in the data.
+
+PCA is a type of linear transformation on a given data set that has values for a certain number of variables (coordinates) for a certain amount of spaces. In this way, you transform a set of `x` correlated variables over `y` samples to a set of `p` uncorrelated principal components over the same samples.
+
+Where many variables correlate with one another, they will all contribute strongly to the same principal component. Where your initial variables are strongly correlated with one another, you will be able to approximate most of the complexity in your dataset with just a few principal components. As you add more principal components, you summarize more and more of the original dataset. Adding additional components makes your estimate of the total dataset more accurate, but also more unwieldy.
+
 Let's have a look into the variables that we currently have, and apply PCA to them. As you can see, we will be using only the numerical variables (i.e. we will exclude the first two, `ID` and `Diagnosis`):
 
+We can use `prcomp` to perform our PCA and then use the `summary()` function to get a summary of the PCA:
+
 ```r
-ppv_pca <- prcomp(breastCancerData[3:ncol(breastCancerData)], center = TRUE, scale. = TRUE)
+pca1 <- prcomp(breastCancerData[3:ncol(breastCancerData)])
+summary(pca1)
+```
+```
+Importance of components:
+                           PC1      PC2      PC3     PC4     PC5     PC6   PC7    PC8    PC9   PC10   PC11    PC12    PC13    PC14    PC15   PC16    PC17    PC18    PC19    PC20     PC21    PC22
+Standard deviation     666.170 85.49912 26.52987 7.39248 6.31585 1.73337 1.347 0.6095 0.3944 0.2899 0.1778 0.08659 0.05623 0.04649 0.03642 0.0253 0.01936 0.01534 0.01359 0.01281 0.008838 0.00759
+Proportion of Variance   0.982  0.01618  0.00156 0.00012 0.00009 0.00001 0.000 0.0000 0.0000 0.0000 0.0000 0.00000 0.00000 0.00000 0.00000 0.0000 0.00000 0.00000 0.00000 0.00000 0.000000 0.00000
+Cumulative Proportion    0.982  0.99822  0.99978 0.99990 0.99999 0.99999 1.000 1.0000 1.0000 1.0000 1.0000 1.00000 1.00000 1.00000 1.00000 1.0000 1.00000 1.00000 1.00000 1.00000 1.000000 1.00000
+                           PC23     PC24     PC25     PC26     PC27     PC28     PC29      PC30
+Standard deviation     0.005909 0.005329 0.004018 0.003534 0.001918 0.001688 0.001416 0.0008379
+Proportion of Variance 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.0000000
+Cumulative Proportion  1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.0000000
+```
+![explained variance proportion pca non-centered, non-scaled](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/pca1_stdev.png "explained variance proportion pca non-centered, non-scaled")
+
+You can see that the first component explains ~98% of the variance in our data. So  according to this, our data was actually almost 1-dimensional!
+
+our PCA object has a number of elements:
+ * `$sdev`  : variance explained by each component
+ * `$rotation`: The relationship (correlation or anticorrelation, etc) between the initial variables and the principal components
+ * The center point (`$center`), scaling (`$scale`) and the 
+ * `$x` : the values of each sample in terms of the principal components
+
+Let's look at the composition of this first component which seems so important:
+
+```r
+o = order( abs( pca1$rotation[,1] ) , decreasing=TRUE )
+pca1$rotation[o[1:5],1] # focus on the 5 top elements
+```
+```
+     Area.Worst       Area.Mean         Area.SE Perimeter.Worst  Perimeter.Mean 
+    -0.85206339     -0.51682647     -0.05572717     -0.04945764     -0.03507633 
 ```
 
-We can use the `summary()` function to get a summary of the PCA:
+Anything after that contributes less to the component.
+
+So, it would appear that this component, which recapitulates ~98% of the variance, is composed, overwhelmingly, of 2 variables related to cell area...
+
+
+_Question:_ **Stop. Think. What does this imply? Is this normal? Did we forget something?**
+
+
+<br>
+
+**Hint:**
+```r
+par(mar=c(5.1,10.6,4.1,2.1))
+barplot( colMeans( breastCancerData[3:ncol(breastCancerData)] ) , 
+         xlab='column mean',las=2 , horiz=TRUE)
+```
+
+
+
+_Extra Question:_ **If you have an idea what went wrong, try to do the right thing. Put the resulting pca object in `ppv_pca` **
+
+<br>
+
+<br>
+
+---
+
+<br>
+
+
+
+
+
+
+Let's see what happen when we actually take care of the difference in scale between our variables by normalizing:
 
 ```r
+ppv_pca <- prcomp(breastCancerData[3:ncol(breastCancerData)] , center=TRUE , scale. =TRUE)
 summary(ppv_pca)
 ```
-
-The resulting table, shows us the importance of each Principal Component; the standard deviation, the proportion of the variance that it captures, as well as the cumulative proportion of variance capture by the principal components.
-
 ```
 Importance of components:
                           PC1    PC2     PC3     PC4     PC5     PC6     PC7     PC8    PC9
@@ -379,49 +502,16 @@ Proportion of Variance 0.00023 0.00005 0.00002 0.00000
 Cumulative Proportion  0.99992 0.99997 1.00000 1.00000
 ```
 
-Principal Components are the underlying structure in the data. They are the directions where there is the most variance, the directions where the data is most spread out. This means that we try to find the straight line that best spreads the data out when it is projected along it. This is the first principal component, the straight line that shows the most substantial variance in the data.
+This is much more reasonnable than before.
 
-PCA is a type of linear transformation on a given data set that has values for a certain number of variables (coordinates) for a certain amount of spaces. In this way, you transform a set of `x` correlated variables over `y` samples to a set of `p` uncorrelated principal components over the same samples.
+In our case, we had 30 variables (32 original, minus the first two), so we have produced 30 eigenvectors / PCs. And we can see that we can address more than 95% of the variance (0.95157) using only the first 10 PCs.
 
-Where many variables correlate with one another, they will all contribute strongly to the same principal component. Where your initial variables are strongly correlated with one another, you will be able to approximate most of the complexity in your dataset with just a few principal components. As you add more principal components, you summarize more and more of the original dataset. Adding additional components makes your estimate of the total dataset more accurate, but also more unwieldy.
 
-Every eigenvector has a corresponding eigenvalue. Simply put, an eigenvector is a direction, such as "vertical" or "45 degrees", while an eigenvalue is a number telling you how much variance there is in the data in that direction. The eigenvector with the highest eigenvalue is, therefore, the first principal component. The number of eigenvalues and eigenvectors that exits is equal to the number of dimensions the data set has. In our case, we had 30 variables (32 original, minus the first two), so we have produced 30 eigenvectors / PCs. And we can see that we can address more than 95% of the variance (0.95157) using only the first 10 PCs.
-
-We should also have a deeper look in our PCA object:
-
-```r
-str(ppv_pca)
-```
-
-The output should look like this:
-
-```
-List of 5
- $ sdev    : num [1:30] 3.64 2.39 1.68 1.41 1.28 ...
- $ rotation: num [1:30, 1:30] -0.219 -0.104 -0.228 -0.221 -0.143 ...
-  ..- attr(*, "dimnames")=List of 2
-  .. ..$ : chr [1:30] "Radius.Mean" "Texture.Mean" "Perimeter.Mean" "Area.Mean" ...
-  .. ..$ : chr [1:30] "PC1" "PC2" "PC3" "PC4" ...
- $ center  : Named num [1:30] 14.1273 19.2896 91.969 654.8891 0.0964 ...
-  ..- attr(*, "names")= chr [1:30] "Radius.Mean" "Texture.Mean" "Perimeter.Mean" "Area.Mean" ...
- $ scale   : Named num [1:30] 3.524 4.301 24.299 351.9141 0.0141 ...
-  ..- attr(*, "names")= chr [1:30] "Radius.Mean" "Texture.Mean" "Perimeter.Mean" "Area.Mean" ...
- $ x       : num [1:569, 1:30] -9.18 -2.39 -5.73 -7.12 -3.93 ...
-  ..- attr(*, "dimnames")=List of 2
-  .. ..$ : NULL
-  .. ..$ : chr [1:30] "PC1" "PC2" "PC3" "PC4" ...
- - attr(*, "class")= chr "prcomp"
-```
-
-The information listed captures the following:
-
-1. The center point (`$center`), scaling (`$scale`) and the standard deviation(`$sdev`) of each original variable
-2. The relationship (correlation or anticorrelation, etc) between the initial variables and the principal components (`$rotation`)
-3. The values of each sample in terms of the principal components (`$x`)
 
 Let's try to visualize the results we've got so far. We will be using the [`ggbiplot` library](https://github.com/vqv/ggbiplot) for this purpose.
 
 ```r
+library(ggbiplot)
 ggbiplot(ppv_pca, choices=c(1, 2),
          labels=rownames(breastCancerData),
          ellipse=TRUE,
@@ -437,7 +527,9 @@ ggbiplot(ppv_pca, choices=c(1, 2),
 
 | **Exercises**  |   |
 |--------|----------|
-| 1 | Try changing the parameters of the plot. For example, check the `choices` and the `var.scale`. Is there an impact? What does this mean?|
+| 1 | Try changing the parameters of the plot. In particular, check the `choices`. |
 | 2 | We have been using the entire table of data. What if we restrict our analysis on the `mean` values (i.e. columns 3-12)? Is there an impact?|
 
+
+**Extra Exercise**  perform a PCA on the Phospho dataset.
 
