@@ -2,6 +2,8 @@
 
 # Exploratory Data Analysis (EDA) 
 
+# Table of Content <a id="toc"></a>
+
 ## Loading some data
 
 The data that we will be using for this workshop are from the following sources:
@@ -57,6 +59,8 @@ _Question: **What is a factor?**_
 # Make Diagnosis a factor
 breastCancerData$Diagnosis <- as.factor(breastCancerData$Diagnosis)
 ```
+
+[back to ToC](#toc)
 
 ## A first look at the data
 
