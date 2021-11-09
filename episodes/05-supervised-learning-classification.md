@@ -1,6 +1,6 @@
 [Go to main page](../README.md)
 
-## Supervised Learning 
+# Supervised Learning : classification
 
 Supervised learning is the branch of Machine Learning (ML) that involves predicting labels, such as 'Survived' or 'Not'. Such models learn from labelled data, which is data that includes whether a passenger survived (called "model training"), and then predict on unlabeled data.
 
@@ -10,7 +10,13 @@ These are generally called train and test sets because
 
 We can then calculate the percentage that you got correct: this is known as the accuracy of your model.
 
-### How To Start with Supervised Learning
+## Table of Content <a id="toc"></a>
+
+ 1. [our first classifier : Decision trees](#dt1)
+
+[back to ToC](#toc)
+
+## How To Start with Supervised Learning
 
 As you might already know, a good way to approach supervised learning is the following:
 - Perform an Exploratory Data Analysis (EDA) on your data set;
@@ -21,8 +27,6 @@ As you might already know, a good way to approach supervised learning is the fol
 
 A common practice in all supervised learning is the construction and use of the **train- and test- datasets**. This process takes all of the input randomly splits into the two datasets (training and test); the ratio of the split is usually up to the researcher, and can be anything: 80/20, 70/30, 60/40...
 
-## Supervised Learning I: classification
-
 There are various classifiers available:
 
 - **Decision Trees** – These are organized in the form of sets of questions and answers in the tree structure.
@@ -30,7 +34,14 @@ There are various classifiers available:
 - **K-NN Classifiers** – Based on the similarity measures like distance, it classifies new cases.
 - **Support Vector Machines** – It is a non-probabilistic binary linear classifier that builds a model to classify a case into one of the two categories.
 
-### Decision trees
+
+We will mostly focus on decisions trees for now, to explore and experiment core concepts of the classification pipeline in Machine Learning. 
+
+Once these concepts are well understood, it is actually relatively easy to apply them to more and more algorithms.
+
+[back to ToC](#toc)
+
+## 1. our first classifier : Decision trees <a id='dt1'></a>
 
 It is a type of supervised learning algorithm. We use it for classification problems. It works for both types of input and output variables. In this technique, we split the population into two or more homogeneous sets. Moreover, it is based on the most significant splitter/differentiator in input variables.
 
@@ -42,17 +53,33 @@ There are two types of decision trees:
 
 Regression trees are used when the dependent variable is continuous while classification trees are used when the dependent variable is categorical. In continuous, a value obtained is a mean response of observation. In classification, a value obtained by a terminal node is a mode of observations.
 
+The main advantages of the decision tree is :
+ * **no need to scale your data**
+ * ability to do **non-linear** classification
+ * resulting models are **easy to interpret**
+
+
 Here, we will use the `rpart` and the `rpart.plot` package in order to produce and visualize a decision tree. First of all, we'll create the train and test datasets using a 70/30 ratio and a fixed seed so that we can reproduce the results.
 
 ```r
 # split into training and test subsets
+library(caret)
 set.seed(1000)
-ind <- sample(2, nrow(breastCancerData), replace=TRUE, prob=c(0.7, 0.3))
-breastCancerData.train <- breastCancerDataNoID[ind==1,]
-breastCancerData.test <- breastCancerDataNoID[ind==2,]
+inTraining <- createDataPartition(breastCancerData$Diagnosis, p = .70, list = FALSE)
+breastCancerData.train <- breastCancerDataNoID[ inTraining,]
+breastCancerData.test  <- breastCancerDataNoID[-inTraining,]
+
 ```
 
-Now, we will load the library and create our model. We would like to create a model that predicts the `Diagnosis` based on the mean of the radius and the area, as well as the SE of the texture. For ths reason we'll use the notation of `myFormula <- Diagnosis ~ Radius.Mean + Area.Mean + Texture.SE`. If we wanted to create a prediction model based on all variables, we will have used `myFormula <- Diagnosis ~ .` instead. Finally, `minsplit` stands for the the minimum number of instances in a node so that it is split.
+Now, we will load the library and create our model. We would like to create a model that predicts the `Diagnosis` based on the mean of the radius and the area, as well as the SE of the texture. For ths reason we'll use the notation of `myFormula <- Diagnosis ~ Radius.Mean + Area.Mean + Texture.SE`. If we wanted to create a prediction model based on all variables, we will have used `myFormula <- Diagnosis ~ .` instead. 
+
+The decision tree algorithm comes with a number of parameters which reflect the following aspects of the model:
+- `minsplit`: the minimum number of instances in a node so that it is split
+- `minbucket`: the minimum allowed number of instances in each leaf of the tree
+- `maxdepth`: the maximum depth of the tree
+- `cp`: parameter that controls the complexity for a split and is set intuitively (the larger its value, the more probable to apply pruning to the tree)
+
+These parameters of the methods which are not set directly from our data itself are called **hyper-parameters**.
 
 ```r
 library(rpart)
@@ -69,29 +96,40 @@ breastCancerData.model <- rpart(myFormula,
 
 print(breastCancerData.model$cptable)
 rpart.plot(breastCancerData.model)
+
 ```
 
 We see the following output and a figure:
 
-```
-      CP       nsplit rel error   xerror     xstd
-1  0.69930070      0 1.0000000 1.0000000 0.06688883
-2  0.02797203      1 0.3006993 0.3006993 0.04330166
-3  0.00000000      2 0.2727273 0.3006993 0.04330166
-4 -1.00000000      6 0.2727273 0.3006993 0.04330166
-```
-
 ![Full decision tree](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/decisionTreeFull.png "Full decision tree")
 
-The parameters that we used reflect the following aspects of the model:
-- `minsplit`: the minimum number of instances in a node so that it is split
-- `minbucket`: the minimum allowed number of instances in each leaf of the tree
-- `maxdepth`: the maximum depth of the tree
-- `cp`: parameter that controls the complexity for a split and is set intuitively (the larger its value, the more probable to apply pruning to the tree)
+```
+           CP nsplit rel error    xerror       xstd
+1  0.69127517      0 1.0000000 1.0000000 0.06484708
+2  0.02013423      1 0.3087248 0.3087248 0.04281476
+3  0.00000000      2 0.2885906 0.3154362 0.04321630
+4 -1.00000000      6 0.2885906 0.3154362 0.04321630
+```
 
-As we can observe, this might not be the best model. So we can select the tree with the minimum prediction error:
+Here, you can see that different values of `CP` have been explored. 
+Interestingly, each value tested are associated with :
+ * `rel error` : relative error
+ * `xerror` : cross-validation error (`rpart` does a 10-fold cross validation without telling you, how nice!)
+
+As we can observe, the value with the lowest relative error (CP: -1), does not correspond to the value with the lowest cross-validation error (CP:0.2013423)
+
+_Question_: **Why is that? Which one should we try to optimize?**
+
+<br>
+
+---
+
+<br>
+
+Let's select the tree with the minimum prediction error:
 
 ```r
+errorType = "xerror" # would you choose "rel error" or "xerror" ?
 opt <- which.min(breastCancerData.model$cptable[, "xerror"])
 cp <- breastCancerData.model$cptable[opt, "CP"]
 # prune tree
@@ -100,6 +138,7 @@ breastCancerData.pruned.model <- prune(breastCancerData.model, cp = cp)
 rpart.plot(breastCancerData.pruned.model)
 
 table(predict(breastCancerData.pruned.model, type="class"), breastCancerData.train$Diagnosis)
+
 ```
 
 The output now is the following Confusion Matrix and pruned tree:
@@ -114,7 +153,15 @@ M   9   109
 
 _Question: **What does the above "Confusion Matrix" tells you?**_
 
-Now that we have a model, we should check how the prediction works in our test dataset.
+
+So when it increases the CP parameter's effect will reduce the performance on the train set (`rel error`), but limit the amount of error done on new data (`xerror`).
+In other words, it can help avoid **overfitting** of the model. In a sense it is a **regularization parameter**.
+
+Regularization is a double edged sword:
+ * **too little regularization** : overfitting on the train set, bad performance on new data (eg. test set)
+ * **too much regularization** : bad performance overall
+
+Anyway, now that we have a model, we should check how the prediction works in our test dataset.
 
 
 ```r
@@ -130,16 +177,20 @@ The new Confusion Matrix is the following:
 
 ```
 BreastCancer_pred   B   M
-                B 102  16
-                M   1  53
+                B 104  11
+                M   3  52
 ```
 
 ![Prediction Plot](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/predictionPlot.png "Prediction Plot")
 
 | **Exercises**  |   |
 |--------|----------|
-| 1 | Can we improve the above model? What are the key parameters that have the most impact?|
+| 1 | Can we improve the above model? What are the key hyperparameters that have the most impact?|
 | 2 | We have been using only some of the variables in our model. What is the impact of using all variables / features for our prediction? Is this a good or a bad plan?|
+
+
+
+
 
 ### Random Forests
 
