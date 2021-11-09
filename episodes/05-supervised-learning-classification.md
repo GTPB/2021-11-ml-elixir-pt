@@ -13,7 +13,9 @@ We can then calculate the percentage that you got correct: this is known as the 
 ## Table of Content <a id="toc"></a>
 
  1. [our first classifier : Decision trees](#dt1)
-
+ 2. [The classifiation pipeline](#pipeline)
+ 2.1. [Leakage](#leak)
+ 
 [back to ToC](#toc)
 
 ## How To Start with Supervised Learning
@@ -130,7 +132,7 @@ Let's select the tree with the minimum prediction error:
 
 ```r
 errorType = "xerror" # would you choose "rel error" or "xerror" ?
-opt <- which.min(breastCancerData.model$cptable[, "xerror"])
+opt <- which.min(breastCancerData.model$cptable[, errorType])
 cp <- breastCancerData.model$cptable[opt, "CP"]
 # prune tree
 breastCancerData.pruned.model <- prune(breastCancerData.model, cp = cp)
@@ -189,7 +191,71 @@ BreastCancer_pred   B   M
 | 2 | We have been using only some of the variables in our model. What is the impact of using all variables / features for our prediction? Is this a good or a bad plan?|
 
 
+[back to ToC](#toc)
 
+## 2. "The classiciation pipeline" <a id='pipeline'></a>
+
+Now that we have experimented a little with a type model (decision tree), we will be able to discuss important aspects of classification routines in Machine Learning: what are the aspects that are common to most approaches ? what to strive for ? which pitfall to avoid ?
+
+### 2.1. Leakage - the insidious foe <a id='leak'></a>
+
+Consider the following code, which explores different values for the parameter `maxdepth`:
+
+```r
+
+v.maxdepth = 1:10
+v.xerror = c()
+v.predError = c()
+
+for(maxdepth in v.maxdepth){
+
+  breastCancerData.model <- rpart( 'Diagnosis ~ . ' ,
+                                method = "class",
+                                data = breastCancerData.train,
+                                minsplit = 10,
+                                minbucket = 1,
+                                maxdepth = maxdepth,
+                                cp = -1)
+
+
+  opt <- which.min(breastCancerData.model$cptable[, "xerror"])
+
+  cp <- breastCancerData.model$cptable[opt, "CP"]
+  breastCancerData.pruned.model <- prune(breastCancerData.model, cp = cp)
+
+
+  xerror = min( breastCancerData.model$cptable[, "xerror"] )
+  predError = mean( predict(breastCancerData.pruned.model, newdata = breastCancerData.test, type="class") != breastCancerData.test$Diagnosis )
+
+  v.xerror = c(v.xerror , xerror)
+  v.predError = c(v.predError , predError)
+}
+
+
+plot(v.maxdepth , v.xerror , type='l' , lwd=2, 
+	ylim=c(0.0,1.0) , xlab='maxdepth' , ylab='error')
+lines(v.maxdepth , v.predError  , col='red', lwd=2)
+
+legend('topright', c('cross-validation error' , 'prediction error') , lwd=2, col=c('black','red'))
+
+m = which.min(v.xerror)
+points(v.maxdepth[m] , v.xerror[m]  , col='black', lwd=2)
+m = which.min(v.predError)
+points(v.maxdepth[m] , v.predError[m]  , col='red', lwd=2)
+
+```
+
+![maxdepth exploration](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/maxdepthExploration.png "maxdepth exploration")
+
+Where the little circle mark the points where a minimum is reached.
+
+_Question:_**Which `maxdepth` should I choose here for my final model?**
+
+??? done "answer"
+
+  test 
+
+### 2.2. 
 
 
 ### Random Forests
