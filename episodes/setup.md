@@ -19,6 +19,8 @@ install.packages("dendextend")
 install.packages("randomForest")
 install.packages("mlr3")
 install.packages("devtools")
+install.packages("klaR")
+install.packages("kernlab")
 
 ## To install needed Bioconductor packages:
 if (!requireNamespace("BiocManager", quietly = TRUE))

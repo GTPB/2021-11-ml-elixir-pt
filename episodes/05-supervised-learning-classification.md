@@ -19,6 +19,10 @@ We can then calculate the percentage that you got correct: this is known as the 
  2.3. [hyper-parameter optimization](#opt)
  3. [the catalogue](#cata)
  3.1 [Random Forests](#rf)
+ 3.2 [Naive Bayes](#nb)
+ 3.3 [SVM](#SVM)
+
+
 [back to ToC](#toc)
 
 ## How To Start with Supervised Learning
@@ -619,6 +623,63 @@ The most important are:
 **Exercise** : Your turn to play! Tune a random hyper-parameters, train a model and try to draw conclusions from it.
  * We mentionned 2 main hyper-parameters: `mtry` and `ntree`. Do you see others you would like to test?
  * Between you best random forest and your best single decision tree classifier, which one would you prefer? why?
+
+
+[back to ToC](#toc)
+
+### 3.2 Naive Bayes <a id='nb'></a>
+
+```r
+library(klaR)
+?NaiveBayes
+```
+
+
+`caret` method name : `nb`.
+
+Important hyper-parameters:
+* **usekernel** :	if TRUE a kernel density estimate (density) is used for density estimation. If FALSE a normal density is estimated.
+* **fL** : Factor for Laplace correction, default factor is 0, i.e. no correction. The higher it is, the more regulization. [article on this correction](https://towardsdatascience.com/laplace-smoothing-in-na%C3%AFve-bayes-algorithm-9c237a8bdece). A typical range could be between 0 and 1.
+* **adjust** :	the bandwidth used is actually adjust*bw. This makes it easy to specify values like 'half the default' bandwidth.
+
+
+**Exercise** : you know the drill by now, so your turn to play!
+
+
+[back to ToC](#toc)
+
+### 3.3 SVM <a id='SVM'></a>
+
+```r
+library(kernlab)
+```
+
+SVM comes in different flavors, depending on the type of kernel used to combine features.
+
+**linear kernel**, `'svmLinear'` : the mapping of observations use a linear composition of variables.
+ * `C` : "cost" : tells the SVM optimization how much you want to avoid misclassifying each training example. This is an inverse-regularization parameter (higher = less regularization). Typical range is 1e-6 to 10 (use a log-scale). The second answer to [this stack overflow post](https://stats.stackexchange.com/questions/31066/what-is-the-influence-of-c-in-svms-with-linear-kernel) gives a nice visual example.
+ 
+ 
+**polynomial kernel**, `'svmPoly'` : now we use a polynomial combination of features
+ * `C` : same as before
+ * `degree` : degree of the polynome to use (integer values)
+ * `scale` : a factor applied on variables which is sometimes used to normalize patterns(?). typycally between 1e-3 and 1 (use log-scale)
+
+
+**radial basis function kernel (RBF)** `'svmRadial'`, uses a form of euclidian distance around each point.
+ * `C` : same as before
+ * `sigma` : scaling on how the "influence" of a point diminishes with distance. Regularizing hyperparameter. Also often seen as `gamma = 1/2*sigma^2`. Typical range between 0.01 and 1000.
+ 
+
+
+There is not much to say and you could just go to practise with this new algorithm like before. 
+ **Except** there is an interesting twist: **SVM requires your data to be centered and scaled**.
+
+
+**Exercise** : Take this opportunity to get your hand a bit dirty with the code, and find out how you could implement that in the hyper parameter exploration routine. 
+
+_hint1: the solution **is not** to center and scale the training data before giving it to `GridSearchCV`: that would create leakage between your train and validation set._
+_hint2: ?caret::train _
 
 
 
