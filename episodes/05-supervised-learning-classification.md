@@ -13,14 +13,22 @@ We can then calculate the percentage that you got correct: this is known as the 
 ## Table of Content <a id="toc"></a>
 
  1. [our first classifier : Decision trees](#dt1)
+ 
  2. [The classifiation pipeline](#pipeline)
- 2.1. [Leakage](#leak)
- 2.2. [Metrics](#metric)
- 2.3. [hyper-parameter optimization](#opt)
+ 
+ &nbsp;&nbsp;&nbsp; 2.1. [Leakage](#leak)
+ 
+ &nbsp;&nbsp;&nbsp; 2.2. [Metrics](#metric)
+ 
+ &nbsp;&nbsp;&nbsp; 2.3. [hyper-parameter optimization](#opt)
+ 
  3. [the catalogue](#cata)
- 3.1 [Random Forests](#rf)
- 3.2 [Naive Bayes](#nb)
- 3.3 [SVM](#SVM)
+ 
+ &nbsp;&nbsp;&nbsp; 3.1 [Random Forests](#rf)
+ 
+ &nbsp;&nbsp;&nbsp; 3.2 [Naive Bayes](#nb)
+ 
+ &nbsp;&nbsp;&nbsp; 3.3 [SVM](#SVM)
 
 
 [back to ToC](#toc)
@@ -679,6 +687,7 @@ There is not much to say and you could just go to practise with this new algorit
 **Exercise** : Take this opportunity to get your hand a bit dirty with the code, and find out how you could implement that in the hyper parameter exploration routine. 
 
 _hint1: the solution **is not** to center and scale the training data before giving it to `GridSearchCV`: that would create leakage between your train and validation set._
+
 _hint2: ?caret::train _
 
 
