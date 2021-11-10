@@ -20,7 +20,7 @@
 
 **Where**: Instituto Gulbenkian de Ciencia, Oeiras, PT
 
-**Registration**: About to Open
+**Registration**: Open until Nov 11th 2021. Express your interest by e-mail to bicourses@igc.gulbenkian.pt
 
 
 ### Instructors and helpers
