@@ -14,13 +14,11 @@ We can then calculate the percentage that you got correct: this is known as the 
 
  1. [our first classifier : Decision trees](#dt1)
  2. [The classifiation pipeline](#pipeline)
- 
-  2.1. [Leakage](#leak)
-  2.2. [Metrics](#metric)
-  2.3. [hyper-parameter optimization](#opt)
-
-3. [the catalogue](#cata)
- 
+ 2.1. [Leakage](#leak)
+ 2.2. [Metrics](#metric)
+ 2.3. [hyper-parameter optimization](#opt)
+ 3. [the catalogue](#cata)
+ 3.1 [Random Forests](#rf)
 [back to ToC](#toc)
 
 ## How To Start with Supervised Learning
@@ -304,7 +302,7 @@ Here is a non exhautive list of common metrics you can use :
 | **Specificity** | TN/(FP+TN) | YES | `'Spec'` |
 | **Precision** | TP/(TP+FP) | YES | `'Precision'` |
 | **Accuracy** | (TP + TN)/ N  | YES | `'Accuracy'` |
-| **F1-measure**  | $2 * (precision * recall)/(precision + recall) | YES | `'F'` |
+| **F1-measure**  | 2 * (precision * recall)/(precision + recall) | YES | `'F'` |
 | **ROC AUC** | area under the ROC curve  | NO | `'ROC'` |
 | **Cohen's Kappa** | 2 * (TP*TN - FN*FP)/((TP+FP)*(FP+TN)+(TP+FN)*(FN+TN)) | LESS | `'Kappa'` | 
 
