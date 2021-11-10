@@ -266,9 +266,8 @@ In practice, this comes down to **optimizing a metric**.
 
 There are several metrics which differ in the importance they give to different types of errors (False Positive, False Negative), or how they handle different kinds biases, in particular **imbalance**.
 
-| **Confusion Matrix**  | Predicted  |  |
+| **Confusion Matrix**  | Predicted NO  | Predicted YES  |
 |--------|--------|--------|
-|--------| NO | YES |
 | Actual NO  | TN  | FP |
 | Actual YES | FN | TP  |
 
@@ -281,18 +280,18 @@ There are several metrics which differ in the importance they give to different 
 Consider for instance a situation where the training data is made of 990 observations of category NO, and 10 of category YES.
 Now, imagine we create a classifier for this model which will be evaluated on a metric called **Accuracy**, which is the default metric in most implementations:
 
-$$Accuracy = \frac{TP + TN}{ N } $$
+Accuracy = (TP + TN)/ N 
 
-, where $N$ is the total number of observations.
+, where N is the total number of observations.
 
 From there, even a "uninteresting" classifier which just, without even looking at the data, classifies everything as NO would get a good performance:
 
-| **Uninteresting Classifier**  | Predicted  |  |
-|--------| NO | YES |
+| **Uninteresting Classifier**  | Predicted NO | Predicted YES  |
+|--------|--------|--------|
 | Actual NO  | 990  | 0 |
 | Actual YES | 10 | 0  |
 
-$Acc_{uninteresting} = \frac{990}{990+10} = 0.99$
+Acc_uninteresting = 990/(990+10) = 0.99
 
 #### Back on track
 
@@ -300,14 +299,14 @@ Here is a non exhautive list of common metrics you can use :
 
 
 | **Name** | **formula** | **sensitive to imbalance** | **`caret`** | 
-|-------------------------------------------------------|
-| **Sensitivity | Recall** | $\frac{TP}{TP+FN}$ | YES | `'Sens'` | 
-| **Specificity** | $\frac{TN}{FP+TN}$ | YES | `'Spec'` |
-| **Precision** | $\frac{TP}{TP+FP}$ | YES | `'Precision'` |
-| **Accuracy** | $\frac{TP + TN}{ N } $ | YES | `'Accuracy'` |
-| **F1-measure**  | $2 * \frac{precision * recall}{precision + recall}$ | YES | `'F'` |
+|----------|-------------|----------------------------|-------------|
+| **Sensitivity , Recall** | TP/(TP+FN) | YES | `'Sens'` | 
+| **Specificity** | TN/(FP+TN) | YES | `'Spec'` |
+| **Precision** | TP/(TP+FP) | YES | `'Precision'` |
+| **Accuracy** | (TP + TN)/ N  | YES | `'Accuracy'` |
+| **F1-measure**  | $2 * (precision * recall)/(precision + recall) | YES | `'F'` |
 | **ROC AUC** | area under the ROC curve  | NO | `'ROC'` |
-| **Cohen's Kappa** | $\frac{2 * (TP*TN - FN*FP)}{(TP+FP)*(FP+TN)+(TP+FN)*(FN+TN)}$ | LESS | `'Kappa'` | 
+| **Cohen's Kappa** | 2 * (TP*TN - FN*FP)/((TP+FP)*(FP+TN)+(TP+FN)*(FN+TN)) | LESS | `'Kappa'` | 
 
 
 ![ROC AUC example](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/roc_auc_ex.png "ROC AUC example")
