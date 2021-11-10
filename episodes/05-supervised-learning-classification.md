@@ -688,7 +688,7 @@ There is not much to say and you could just go to practise with this new algorit
 
 _hint1: the solution **is not** to center and scale the training data before giving it to `GridSearchCV`: that would create leakage between your train and validation set._
 
-_hint2: `?caret::train` _
+*hint2: `?caret::train`*
 
 
 
