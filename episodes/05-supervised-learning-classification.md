@@ -108,7 +108,7 @@ rpart.plot(breastCancerData.model)
 
 We see the following output and a figure:
 
-![Full decision tree](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/decisionTreeFull.png "Full decision tree")
+![Full decision tree](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/decisionTreeFull.png "Full decision tree")
 
 ```
            CP nsplit rel error    xerror       xstd
@@ -156,7 +156,7 @@ B  245  34
 M   9   109
 ```
 
-![Pruned decision tree](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/decisionTreePruned.png "Pruned decision tree")
+![Pruned decision tree](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/decisionTreePruned.png "Pruned decision tree")
 
 _Question: **What does the above "Confusion Matrix" tells you?**_
 
@@ -188,7 +188,7 @@ BreastCancer_pred   B   M
                 M   3  52
 ```
 
-![Prediction Plot](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/predictionPlot.png "Prediction Plot")
+![Prediction Plot](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/predictionPlot.png "Prediction Plot")
 
 | **Exercises**  |   |
 |--------|----------|
@@ -250,7 +250,7 @@ points(v.maxdepth[m] , v.predError[m]  , col='red', lwd=2)
 
 ```
 
-![maxdepth exploration](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/maxdepthExploration.png "maxdepth exploration")
+![maxdepth exploration](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/maxdepthExploration.png "maxdepth exploration")
 
 Where the little circle mark the points where a minimum is reached.
 
@@ -267,6 +267,7 @@ In practice, this comes down to **optimizing a metric**.
 There are several metrics which differ in the importance they give to different types of errors (False Positive, False Negative), or how they handle different kinds biases, in particular **imbalance**.
 
 | **Confusion Matrix**  | Predicted  |  |
+|--------|--------|--------|
 |--------| NO | YES |
 | Actual NO  | TN  | FP |
 | Actual YES | FN | TP  |
@@ -309,7 +310,7 @@ Here is a non exhautive list of common metrics you can use :
 | **Cohen's Kappa** | $\frac{2 * (TP*TN - FN*FP)}{(TP+FP)*(FP+TN)+(TP+FN)*(FN+TN)}$ | LESS | `'Kappa'` | 
 
 
-![ROC AUC example](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/roc_auc_ex.png "ROC AUC example")
+![ROC AUC example](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/roc_auc_ex.png "ROC AUC example")
 
 
 Additionnaly, you can see that this only covers cases where there is only 2 classes (binary case), other metrics exists or have been adapted for [multi-class problems](https://towardsdatascience.com/comprehensive-guide-on-multiclass-classification-metrics-af94cfb83fbd).
@@ -531,7 +532,7 @@ We can view the overall performance of the model here:
 plot(rf, main = "")
 ```
 
-![Error rate plot for the Random Forest model](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/error-rate-rf.png "Error rate plot for the Random Forest model")
+![Error rate plot for the Random Forest model](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/error-rate-rf.png "Error rate plot for the Random Forest model")
 
 As you can see, the number of trees can (sometimes) act as an **regularization** parameter: 
  * too few tree: underfitting
@@ -581,7 +582,7 @@ Symmetry.Worst                 2.0081243
 Fractal.Dimension.Worst        1.8349326
 ```
 
-![Importance of the individual variables](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/importance-variables.png "Importance of the individual variables")
+![Importance of the individual variables](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/importance-variables.png "Importance of the individual variables")
 
 _Question:_ **What could that be useful for?**
 
@@ -603,7 +604,7 @@ BreastCancer_pred_RD   B   M
                    M   2  59
 ```
 
-![Margin plot for the Random Forest](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/margin-rf.png "Margin plot for the Random Forest")
+![Margin plot for the Random Forest](https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/static/images/margin-rf.png "Margin plot for the Random Forest")
 
 The margin of a data point is defined as the proportion of votes for the correct class minus maximum proportion of votes for the other classes. Thus under majority votes, positive margin means correct classification, and vice versa.
 
