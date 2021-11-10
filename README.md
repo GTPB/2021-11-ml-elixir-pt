@@ -20,7 +20,9 @@
 
 **Where**: Instituto Gulbenkian de Ciencia, Oeiras, PT
 
-**Registration**: About to Open
+**Registration**: 
+People should express interest by mailing bicourses [at] igc.gulbenkian.pt 
+as explained under "Contact" in [https://tess.elixir-europe.org/events/machine-learning](https://tess.elixir-europe.org/events/machine-learning)
 
 
 ### Instructors and helpers
