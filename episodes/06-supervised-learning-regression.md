@@ -2,6 +2,21 @@
 
 ## Supervised Learning II: regression
 
+```{r}
+
+library(tidyverse)
+breastCancerData <- read_csv("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data",
+                             col_names = FALSE)
+breastCancerDataColNames <- read_csv("https://raw.githubusercontent.com/BiodataAnalysisGroup/2021-11-ml-elixir-pt/main/data/wdbc.colnames.csv",
+                                     col_names = FALSE)
+colnames(breastCancerData) <- breastCancerDataColNames$X1
+
+breastCancerData$Diagnosis = as.factor(breastCancerData$Diagnosis)
+
+# Check out head of dataframe
+breastCancerData %>% head()
+```
+
 ### Linear regression
 
 Linear regression is to predict response with a linear function of predictors. The most common function in R for this is `lm`. In our dataset, let's try to investigate the relationship between `Radius.Mean`, `Concave.Points.Mean` and `Area.Mean`. We can get a first impression by looking at the correlation of these variables:
@@ -12,11 +27,13 @@ cor(breastCancerData$Radius.Mean, breastCancerData$Concave.Points.Mean)
 ## [1] 0.8225285
 cor(breastCancerData$Concave.Points.Mean, breastCancerData$Area.Mean)
 ## [1] 0.8232689
+
 ```
 
 Lets create a short version of our data
 ```r
 bc <- select(breastCancerData,Radius.Mean,Concave.Points.Mean,Area.Mean)
+
 ```
 
 
@@ -25,6 +42,7 @@ Let's build now a linear regression model with function `lm()` on the whole data
 ```r
 bc_model_full <- lm(Radius.Mean ~ Concave.Points.Mean + Area.Mean, data=bc)
 bc_model_full
+
 ```
 
 The output is the following:
@@ -42,10 +60,12 @@ This tells us what are the coefficients of `Concave.Points.Mean` and `Area.Mean`
 
 Let's make predictions on our training dataset and visualize
 ```r
+
 preds <- predict(bc_model_full)
 
 plot(preds, bc$Radius.Mean, xlab = "Prediction", ylab = "Observed")
 abline(a = 0, b = 1)
+
 ```
 ![Prediction Plot GLM](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/lm_full_dataset.png "Prediction Plot GLM")
 
@@ -74,6 +94,7 @@ F-statistic: 1.111e+04 on 2 and 566 DF,  p-value: < 2.2e-16
 But his only provides the evaluation on the whole dataset that we sued for training. we don't know how it will perform on unknown dataset. So, let's split our dataset into training and test set, create the model on training set and visualize the predictions
 
 ```r
+
 set.seed(123)
 ind <- sample(2, nrow(bc), replace=TRUE, prob=c(0.75, 0.25))
 bc_train <- bc[ind==1,]
@@ -103,6 +124,7 @@ You will note that it is quite similar to when using whole dataset
 Let's predict using test data:
 
 ```r
+
 bc_test$pred <- predict(bc_model , newdata=bc_test)
 
 # plot the ground truths vs predictions for test set and examine the plot. Does it look as good with the predictions on the training set?
@@ -157,6 +179,43 @@ This again confirms that our model is very good as the R_Square value is very cl
 | **Exercises**  |   |
 |--------|----------|
 | 1 | Calculate R_Square for the test data and check if the model is not overfit. |
+
+
+**3. Avoid leakage and overfitting : `caret` for your cross-validation procedure**
+
+```{r}
+
+library(caret)
+# Set up a 10-fold cross validation
+tc <- trainControl(method = "cv", number = 10)
+
+# Include the setup in your model
+lm1_cv <- train(Radius.Mean~Concave.Points.Mean+Area.Mean, 
+             data = bc_train, 
+             method = "lm",
+             preProcess = c('center', 'scale'),
+             trControl = tc) # here
+lm1_cv
+
+```
+
+### Random Forest for regression
+
+```{r}
+
+library(caret)
+# Set up a 10-fold cross validation
+tc <- trainControl(method = "cv", number = 10)
+
+# Include the setup in your model
+rf1_cv <- train(Radius.Mean~Concave.Points.Mean+Area.Mean, 
+             data = bc_train, 
+             method = "rf",
+             preProcess = c('center', 'scale'),
+             trControl = tc) # here
+rf1_cv
+
+```
 
 
 ### Generalized Linear Model (GLM)
@@ -242,6 +301,11 @@ rss <- sum(err^2)
 The plot, the value of RMSE (higher than in linear regression) and RSquare (lower than that for linear regression) indicates that this model is not as good as linear regression.
 
 ![Prediction Plot GLM](https://raw.githubusercontent.com/fpsom/2021-06-ml-elixir-fr/main/static/images/glm_train_dataset.png "Prediction Plot GLM")
+
+
+> note : R-squared is not the best metric for non linear models.
+
+Here is an example on how to use a [GLM with `caret`](https://www.kaggle.com/tentotheminus9/quick-glm-using-caret)
 
 | **Exercises**  |   |
 |--------|----------|
