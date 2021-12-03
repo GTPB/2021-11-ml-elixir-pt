@@ -159,4 +159,8 @@ This material is made available under the [Creative Commons Attribution 4.0 Inte
 
 ## Citation
 
+
+
+Additionnaly, we would like to acknowledge that this training materials draws heavily from :
+
 Shakuntala Baichoo, Wandrille Duchemin, Geert van Geest, Thuong Van Du Tran, Fotis E. Psomopoulos, & Monique Zahn. (2020, July 23). Introduction to Machine Learning (Version v1.0.0). Zenodo. http://doi.org/10.5281/zenodo.3958880
