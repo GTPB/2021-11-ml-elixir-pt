@@ -4,15 +4,25 @@
     "title": "Introduction to Machine Learning",
     "version": "v1.0.0",
     "upload_type": "software",
-    "publication_date": "2021-06-18",
+    "publication_date": "2021-11-18",
     "creators": [
         {
-            "affiliation": "SIB Swiss Institute of Bioinformatics - Vital-IT Group, CH",
-            "name": "Thuong Van Du Tran",
-            "orcid": "0000-0003-2074-5029"
+            "affiliation": "SIB Swiss Institute of Bioinformatics - sciCORE Center for Scientific Computing, University of Basel, Basel, Switzerland",
+            "name": "Wandrille Duchemin",
+            "orcid": "0000-0001-8854-7235"
         },
         {
-            "affiliation": "Institute of Applied Biosciences - CERTH, GR",
+            "affiliation": "Eberhard Karls University of Tübingen, Faculty of Mathematics and Natural Sciences, Tübingen, Germany",
+            "name": "Crhistian Cardona",
+            "orcid": "0000-0003-1925-5188"
+        },
+        {
+            "affiliation": "Instituto Gulbenkian de Ciencia, Oeiras, Portugal",
+            "name": "Pedro L. Fernandes",
+            "orcid": "0000-0003-2124-0241"
+        },
+        {
+            "affiliation": "Institute of Applied Biosciences - CERTH, Thessaloniki, Greece",
             "name": "Fotis E. Psomopoulos",
             "orcid": "0000-0002-0222-4273"
         }
